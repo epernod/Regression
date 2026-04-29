@@ -178,9 +178,9 @@ if __name__ == '__main__':
     if args.legacy_mode:
         print("Legacy regression mode activated.")
         reg_prog.legacy_mode = True
-
-    replayId = int(args.replay)
-    if replayId is not None:
+    
+    if args.replay is not None:
+        replayId = int(args.replay)
         reg_prog.replay_references(replayId)
         sys.exit()
 
