@@ -92,9 +92,9 @@ class RegressionProgram:
 
         return nbr_scenes
 
-    def replay_references(self, id_set=0):
+    def replay_references(self, id_scene, id_set=0):
         scene_list = self.scene_sets[id_set]
-        scene_list.replay_references(0)
+        scene_list.replay_references(id_scene)
 
 
 
@@ -123,7 +123,7 @@ def make_parser():
     
     parser.add_argument('--replay', 
                         dest='replay', 
-                        help="test option to replay reference",
+                        help=f"Will launch runSofa on the scene number X (input number) in the input the list of the {regression_file_extension} file given as input and display the scene references aside from the simulation",
                         type=int)
     
     parser.add_argument(
@@ -155,6 +155,7 @@ def make_parser():
 Examples:
     python SofaRegressionProgram.py --input ./scenes
     python SofaRegressionProgram.py --input ./scenes --filter \"$demo.*.scn\"
+    python SofaRegressionProgram.py --input ./scenes --replay 5
         '''
 
     return parser
@@ -178,9 +179,9 @@ if __name__ == '__main__':
         print("Legacy regression mode activated.")
         reg_prog.legacy_mode = True
 
-    replay = bool(args.replay)
-    if replay:
-        reg_prog.replay_references()
+    replayId = int(args.replay)
+    if replayId is not None:
+        reg_prog.replay_references(replayId)
         sys.exit()
 
     if args.write_mode:
